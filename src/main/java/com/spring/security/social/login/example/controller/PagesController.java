@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +15,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.security.social.login.example.util.SecurityUtil;
+
 /**
  * @author <a href="mailto:sunil.pulugula@wavemaker.com">Sunil Kumar</a>
  * @since 22/3/16
  */
 @RestController
 public class PagesController {
+	
+    private static final Logger LOGGER = LoggerFactory.getLogger(PagesController.class);
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+    	LOGGER.info("/login");
         ModelAndView model = new ModelAndView();
         model.addObject("title", "Login Page");
         model.setViewName("login");
@@ -30,6 +37,7 @@ public class PagesController {
 
     @RequestMapping(value = {"/userpage"}, method = RequestMethod.GET)
     public ModelAndView userPage() {
+        LOGGER.info("/userpage");
 
         ModelAndView model = new ModelAndView();
         model.addObject("title", "Spring security social login Hello World");
