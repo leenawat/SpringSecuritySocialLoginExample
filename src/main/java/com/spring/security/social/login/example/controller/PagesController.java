@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class PagesController {
 	
     private static final Logger logger = LoggerFactory.getLogger(PagesController.class);
-
+    
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
     	logger.info(null);

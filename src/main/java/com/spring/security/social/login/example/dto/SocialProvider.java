@@ -6,7 +6,7 @@ package com.spring.security.social.login.example.dto;
  */
 public enum SocialProvider {
 
-    FACEBOOK("facebook"), TWITTER("twitter"), LINKEDIN("linkedin"), GOOGLE("google"), NONE("local");
+    FACEBOOK("facebook"), MOPHPORTAL("mophportal"), GOOGLE("google"), NONE("local");
 
     private String providerType;
 

@@ -38,7 +38,7 @@ public class AppConnectionSignUp implements ConnectionSignUp {
 
 	@Override
 	public String execute(final Connection<?> connection) {
-		logger.info("");
+		logger.info("connection.getKey().getProviderId()="+connection.getKey().getProviderId());
 		 Facebook facebook = (Facebook) connection.getApi();
 	        String [] fields = { "id", "email",  "first_name", "last_name" };
 	        FacabookUser facabookUser = facebook.fetchObject("me", FacabookUser.class, fields);

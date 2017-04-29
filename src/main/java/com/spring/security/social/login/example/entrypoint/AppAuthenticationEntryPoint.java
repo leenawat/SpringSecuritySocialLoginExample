@@ -31,7 +31,7 @@ public class AppAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoin
      */
     public AppAuthenticationEntryPoint(final String loginFormUrl) {
         super(loginFormUrl);
-    	logger.info(null);
+    	logger.info("loginFormUrl"+loginFormUrl);
     }
 
     /**
