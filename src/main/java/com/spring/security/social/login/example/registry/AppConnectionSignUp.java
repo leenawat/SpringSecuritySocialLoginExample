@@ -5,6 +5,8 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.facebook.api.Facebook;
@@ -29,6 +31,10 @@ public class AppConnectionSignUp implements ConnectionSignUp {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier(value = "localUserDetailService")
+	private UserDetailsService userDetailService;
 
 	@Override
 	public String execute(final Connection<?> connection) {
@@ -36,14 +42,23 @@ public class AppConnectionSignUp implements ConnectionSignUp {
 		 Facebook facebook = (Facebook) connection.getApi();
 	        String [] fields = { "id", "email",  "first_name", "last_name" };
 	        FacabookUser facabookUser = facebook.fetchObject("me", FacabookUser.class, fields);
-		UserRegistrationForm userDetails = toUserRegistrationObject(connection.getKey().getProviderUserId(),
+	        UserRegistrationForm userDetails = toUserRegistrationObject(connection.getKey().getProviderUserId(),
 				SecurityUtil.toSocialProvider(connection.getKey().getProviderId()), facabookUser);
-		LocalUser user = (LocalUser) userService.registerNewUser(userDetails);
-		return user.getUserId();
+			LocalUser userLocal = (LocalUser) userDetailService.loadUserByUsername(connection.getKey().getProviderUserId());
+			if(userLocal == null){
+				logger.info("");
+				LocalUser user = (LocalUser) userService.registerNewUser(userDetails);
+				return user.getUserId();
+			}else{
+				logger.info("");
+				return userLocal.getUserId();
+			}
 	}
 
 	private UserRegistrationForm toUserRegistrationObject(final String userId, final SocialProvider socialProvider,
 			FacabookUser facebookUser) {
+		logger.info("userid : "+ userId);
+		logger.info("facebookUser.getUserId() : "+ facebookUser.getId());
 		logger.info("");
 		String password = randomAlphabetic(8);
 		System.out.println("password : " + password);

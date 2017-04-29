@@ -33,9 +33,10 @@ public class LocalUserDetailService implements UserDetailsService {
     @Override
     @Transactional
     public LocalUser loadUserByUsername(final String userId) throws UsernameNotFoundException {
-		logger.info("");
+		logger.info("userId : " + userId);
         User user = userDAO.get(userId);
         if (user == null) {
+        	logger.info("user == null");
             return null;
         }
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = buildSimpleGrantedAuthorities(user);

@@ -11,7 +11,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <spring-version>4.2.0.RELEASE</spring-version>
+        <spring-version>4.3.8.RELEASE</spring-version>
         <spring-security-version>3.2.3.RELEASE</spring-security-version>
         <spring.social.version>1.1.4.RELEASE</spring.social.version>
         <spring.social.facebook.version>2.0.3.RELEASE</spring.social.facebook.version>
