@@ -3,6 +3,8 @@ package com.spring.security.social.login.example.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +24,8 @@ import com.spring.security.social.login.example.dto.LocalUser;
  */
 @Service("localUserDetailService")
 public class LocalUserDetailService implements UserDetailsService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(LocalUserDetailService.class);
 
     @Autowired
     private UserDAO userDAO;
@@ -29,6 +33,7 @@ public class LocalUserDetailService implements UserDetailsService {
     @Override
     @Transactional
     public LocalUser loadUserByUsername(final String userId) throws UsernameNotFoundException {
+		logger.info("");
         User user = userDAO.get(userId);
         if (user == null) {
             return null;
@@ -39,6 +44,7 @@ public class LocalUserDetailService implements UserDetailsService {
     }
 
     private List<SimpleGrantedAuthority> buildSimpleGrantedAuthorities(final User user) {
+		logger.info("");
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
         if (user.getRoles() != null) {
             for (Role role : user.getRoles()) {

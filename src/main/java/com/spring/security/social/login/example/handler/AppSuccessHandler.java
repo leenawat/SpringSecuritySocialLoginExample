@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -19,6 +21,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
  * @since 29/12/15
  */
 public class AppSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AppSuccessHandler.class);
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -26,6 +30,7 @@ public class AppSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException {
         String targetUrl = determineTargetUrl(authentication);
+    	logger.info("handle.targetUrl="+targetUrl);
 
         if (response.isCommitted()) {
             System.out.println("Can't redirect");
@@ -40,6 +45,7 @@ public class AppSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
      * appropriate URL according to his/her role.
      */
     protected String determineTargetUrl(Authentication authentication) {
+    	logger.info("determineTargetUrl");
         String url = "";
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

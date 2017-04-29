@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.security.social.login.example.util.SecurityUtil;
-
 /**
  * @author <a href="mailto:sunil.pulugula@wavemaker.com">Sunil Kumar</a>
  * @since 22/3/16
@@ -24,11 +22,11 @@ import com.spring.security.social.login.example.util.SecurityUtil;
 @RestController
 public class PagesController {
 	
-    private static final Logger LOGGER = LoggerFactory.getLogger(PagesController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PagesController.class);
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
-    	LOGGER.info("/login");
+    	logger.info(null);
         ModelAndView model = new ModelAndView();
         model.addObject("title", "Login Page");
         model.setViewName("login");
@@ -37,7 +35,7 @@ public class PagesController {
 
     @RequestMapping(value = {"/userpage"}, method = RequestMethod.GET)
     public ModelAndView userPage() {
-        LOGGER.info("/userpage");
+    	logger.info(null);
 
         ModelAndView model = new ModelAndView();
         model.addObject("title", "Spring security social login Hello World");
@@ -48,6 +46,7 @@ public class PagesController {
 
     @RequestMapping(value = {"/accessdenied"}, method = RequestMethod.GET)
     public ModelAndView accessDeniedPage() {
+    	logger.info(null);
         ModelAndView model = new ModelAndView();
         model.addObject("message", "Either username or password is incorrect.");
         model.setViewName("accessdenied");
@@ -55,6 +54,7 @@ public class PagesController {
     }
 
     private String getUser() {
+    	logger.info(null);
         String userName = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {

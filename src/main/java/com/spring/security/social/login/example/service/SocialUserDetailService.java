@@ -1,5 +1,7 @@
 package com.spring.security.social.login.example.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -19,6 +21,8 @@ import com.spring.security.social.login.example.dto.SocialUser;
  */
 @Service("socialUserDetailService")
 public class SocialUserDetailService implements SocialUserDetailsService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SocialUserDetailService.class);
 
     @Autowired
     @Qualifier(value = "localUserDetailService")
@@ -26,8 +30,10 @@ public class SocialUserDetailService implements SocialUserDetailsService {
 
     @Override
     public SocialUserDetails loadUserByUserId(final String userId) throws UsernameNotFoundException, DataAccessException {
+		logger.info(null);
         LocalUser user = (LocalUser) userDetailService.loadUserByUsername(userId);
         if (user == null) {
+        	logger.info("user == null");
             throw new SocialAuthenticationException("No local user mapped with social user " + userId);
         }
         return new SocialUser(user.getUserId(),user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(), user.getAuthorities());

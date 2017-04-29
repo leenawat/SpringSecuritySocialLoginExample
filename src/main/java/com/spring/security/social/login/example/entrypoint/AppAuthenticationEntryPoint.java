@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -16,6 +18,8 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
  * @since 30/12/15
  */
 public class AppAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AppAuthenticationEntryPoint.class);
 
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -27,6 +31,7 @@ public class AppAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoin
      */
     public AppAuthenticationEntryPoint(final String loginFormUrl) {
         super(loginFormUrl);
+    	logger.info(null);
     }
 
     /**
@@ -34,7 +39,7 @@ public class AppAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoin
      */
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-
+    	logger.info(null);
         // redirect to login page. Use https if forceHttps true
         String redirectUrl = buildRedirectUrlToLoginPage(request, response, authException);
 

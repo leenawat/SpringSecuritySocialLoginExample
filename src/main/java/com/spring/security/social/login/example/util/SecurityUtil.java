@@ -15,19 +15,20 @@ import com.spring.security.social.login.example.dto.SocialProvider;
  */
 public class SecurityUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
 
     public static void authenticateUser(UserDetails userDetails)
     {
-        LOGGER.debug("Logging in principal: {}", userDetails);
+    	logger.debug("Logging in principal: {}", userDetails);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        LOGGER.info("User: {} has been logged in.", userDetails);
+        logger.info("User: {} has been logged in.", userDetails);
     }
 
     public static SocialProvider toSocialProvider(String providerId) {
+    	logger.info("providerId", providerId);
         for (SocialProvider socialProvider : SocialProvider.values()) {
             if (socialProvider.getProviderType().equals(providerId)) {
                 return socialProvider;
